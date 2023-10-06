@@ -56,7 +56,17 @@ public class AccountController(
             accountPolicy.Value.EmailDomainList.Split(',').All(d => d != mailDomain))
             return BadRequest(new RequestResponse($"可用邮箱后缀：{accountPolicy.Value.EmailDomainList}"));
 
-        var user = new UserInfo { UserName = model.UserName, Email = model.Email, Role = Role.User };
+        var user = new UserInfo
+        {
+            UserName = model.UserName,
+            Email = model.Email,
+            Role = Role.User,
+            
+            RealName = model.RealName,
+            PhoneNumber = model.PhoneNumber,
+            StdNumber = model.StdNumber,
+            QqNumber = model.QqNumber
+        };
 
         user.UpdateByHttpContext(HttpContext);
 

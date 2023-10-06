@@ -39,10 +39,16 @@ public class AdminUserInfoModel
     public string? RealName { get; set; }
 
     /// <summary>
-    /// 学工号
+    /// 一卡通号
     /// </summary>
-    [MaxLength(24, ErrorMessage = "学工号过长")]
+    [MaxLength(24, ErrorMessage = "一卡通号过长")]
     public string? StdNumber { get; set; }
+    
+    /// <summary>
+    /// QQ 号
+    /// </summary>
+    [MaxLength(11, ErrorMessage = "QQ 号过长")]
+    public string? QqNumber { get; set; }
 
     /// <summary>
     /// 用户是否通过邮箱验证（可登录）

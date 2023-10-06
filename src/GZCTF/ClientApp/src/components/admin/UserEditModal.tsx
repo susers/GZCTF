@@ -126,7 +126,7 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
             onChange={(event) => setProfile({ ...profile, phone: event.target.value })}
           />
           <TextInput
-            label="学工号"
+            label="一卡通号"
             type="number"
             w="100%"
             value={profile.stdNumber ?? ''}
@@ -140,6 +140,14 @@ const UserEditModal: FC<UserEditModalProps> = (props) => {
             value={profile.realName ?? ''}
             disabled={disabled}
             onChange={(event) => setProfile({ ...profile, realName: event.target.value })}
+          />
+          <TextInput
+            label="QQ 号"
+            type="number"
+            w="100%"
+            value={profile.qqNumber ?? ''}
+            disabled={disabled}
+            onChange={(event) => setProfile({ ...profile, qqNumber: event.target.value })}
           />
         </SimpleGrid>
         <Textarea

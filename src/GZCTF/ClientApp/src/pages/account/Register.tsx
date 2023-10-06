@@ -1,15 +1,15 @@
-import { FC, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Anchor, Button, PasswordInput, TextInput } from '@mantine/core'
-import { useInputState } from '@mantine/hooks'
-import { showNotification, updateNotification } from '@mantine/notifications'
-import { mdiCheck, mdiClose } from '@mdi/js'
-import { Icon } from '@mdi/react'
+import {FC, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import {Anchor, Button, PasswordInput, SimpleGrid, TextInput} from '@mantine/core'
+import {useInputState} from '@mantine/hooks'
+import {showNotification, updateNotification} from '@mantine/notifications'
+import {mdiCheck, mdiClose} from '@mdi/js'
+import {Icon} from '@mdi/react'
 import AccountView from '@Components/AccountView'
-import Captcha, { useCaptchaRef } from '@Components/Captcha'
+import Captcha, {useCaptchaRef} from '@Components/Captcha'
 import StrengthPasswordInput from '@Components/StrengthPasswordInput'
-import { usePageTitle } from '@Utils/usePageTitle'
-import api, { RegisterStatus } from '@Api'
+import {usePageTitle} from '@Utils/usePageTitle'
+import api, {RegisterStatus} from '@Api'
 
 const RegisterStatusMap = new Map([
   [
@@ -40,10 +40,14 @@ const Register: FC = () => {
   const [retypedPwd, setRetypedPwd] = useInputState('')
   const [uname, setUname] = useInputState('')
   const [email, setEmail] = useInputState('')
+  const [realName, setRealName] = useInputState('')
+  const [stdNumber, setStdNumber] = useInputState('')
+  const [phoneNumber, setPhoneNumber] = useInputState('')
+  const [qqNumber, setQqNumber] = useInputState('')
   const [disabled, setDisabled] = useState(false)
 
   const navigate = useNavigate()
-  const { captchaRef, getToken } = useCaptchaRef()
+  const {captchaRef, getToken} = useCaptchaRef()
 
   usePageTitle('注册')
 
@@ -55,12 +59,12 @@ const Register: FC = () => {
         color: 'red',
         title: '请检查输入',
         message: '重复密码有误',
-        icon: <Icon path={mdiClose} size={1} />,
+        icon: <Icon path={mdiClose} size={1}/>,
       })
       return
     }
 
-    const { valid, token } = await getToken()
+    const {valid, token} = await getToken()
 
     if (!valid) {
       showNotification({
@@ -89,6 +93,10 @@ const Register: FC = () => {
         password: pwd,
         email: email,
         challenge: token,
+        realName: realName,
+        stdNumber: stdNumber,
+        phoneNumber: phoneNumber,
+        qqNumber: qqNumber,
       })
       const data = RegisterStatusMap.get(res.data.data)
       if (data) {
@@ -97,7 +105,7 @@ const Register: FC = () => {
           color: 'teal',
           title: data.title,
           message: data.message,
-          icon: <Icon path={mdiCheck} size={1} />,
+          icon: <Icon path={mdiCheck} size={1}/>,
         })
 
         if (res.data.data === RegisterStatus.LoggedIn) navigate('/')
@@ -109,7 +117,7 @@ const Register: FC = () => {
         color: 'red',
         title: '遇到了问题',
         message: `${err.response.data.title}`,
-        icon: <Icon path={mdiClose} size={1} />,
+        icon: <Icon path={mdiClose} size={1}/>,
       })
     } finally {
       setDisabled(false)
@@ -152,7 +160,49 @@ const Register: FC = () => {
         w="100%"
         error={pwd !== retypedPwd}
       />
-      <Captcha action="register" ref={captchaRef} />
+      <SimpleGrid cols={2}>
+        <TextInput
+          required
+          label="真实姓名"
+          type="text"
+          placeholder="张三"
+          w="100%"
+          value={realName}
+          disabled={disabled}
+          onChange={(event) => setRealName(event.currentTarget.value)}
+        />
+        <TextInput
+          required
+          label="一卡通号"
+          type="text"
+          placeholder="213230000"
+          w="100%"
+          value={stdNumber}
+          disabled={disabled}
+          onChange={(event) => setStdNumber(event.currentTarget.value)}
+        />
+        <TextInput
+          required
+          label="手机号"
+          type="text"
+          placeholder="19201680101"
+          w="100%"
+          value={phoneNumber}
+          disabled={disabled}
+          onChange={(event) => setPhoneNumber(event.currentTarget.value)}
+        />
+        <TextInput
+          required
+          label="QQ 号"
+          type="text"
+          placeholder="1234567890"
+          w="100%"
+          value={qqNumber}
+          disabled={disabled}
+          onChange={(event) => setQqNumber(event.currentTarget.value)}
+        />
+      </SimpleGrid>
+      <Captcha action="register" ref={captchaRef}/>
       <Anchor
         sx={(theme) => ({
           fontSize: theme.fontSizes.xs,

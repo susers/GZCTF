@@ -52,11 +52,18 @@ public partial class UserInfo : IdentityUser
     public string RealName { get; set; } = string.Empty;
 
     /// <summary>
-    /// 学工号
+    /// 一卡通号
     /// </summary>
     [MaxLength(31)]
     [ProtectedPersonalData]
     public string StdNumber { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// QQ 号
+    /// </summary>
+    [MaxLength(11)]
+    [ProtectedPersonalData]
+    public string QqNumber { get; set; } = string.Empty;
 
     [NotMapped]
     [MemoryPackIgnore]
@@ -85,6 +92,7 @@ public partial class UserInfo : IdentityUser
         Bio = model.Bio ?? Bio;
         Role = model.Role ?? Role;
         StdNumber = model.StdNumber ?? StdNumber;
+        QqNumber = model.QqNumber ?? QqNumber;
         RealName = model.RealName ?? RealName;
         PhoneNumber = model.Phone ?? PhoneNumber;
         EmailConfirmed = model.EmailConfirmed ?? EmailConfirmed;
@@ -97,6 +105,7 @@ public partial class UserInfo : IdentityUser
         StdNumber = model.StdNumber ?? StdNumber;
         RealName = model.RealName ?? RealName;
         PhoneNumber = model.Phone ?? PhoneNumber;
+        QqNumber = model.QqNumber ?? QqNumber;
     }
 
     internal void UpdateUserInfo(ProfileUpdateModel model)
@@ -106,6 +115,7 @@ public partial class UserInfo : IdentityUser
         PhoneNumber = model.Phone ?? PhoneNumber;
         RealName = model.RealName ?? RealName;
         StdNumber = model.StdNumber ?? StdNumber;
+        QqNumber = model.QqNumber ?? QqNumber;
     }
 
     #region 数据库关系

@@ -39,6 +39,7 @@ const Profile: FC = () => {
     stdNumber: user?.stdNumber,
     phone: user?.phone,
     realName: user?.realName,
+    qqNumber: user?.qqNumber,
   })
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
 
@@ -60,6 +61,7 @@ const Profile: FC = () => {
       stdNumber: user?.stdNumber,
       phone: user?.phone,
       realName: user?.realName,
+      qqNumber: user?.qqNumber,
     })
   }, [user])
 
@@ -172,7 +174,7 @@ const Profile: FC = () => {
             </Avatar>
           </Center>
         </Group>
-        <SimpleGrid cols={2}>
+        <SimpleGrid cols={3}>
           <TextInput
             label="邮箱"
             type="email"
@@ -190,7 +192,17 @@ const Profile: FC = () => {
             onChange={(event) => setProfile({ ...profile, phone: event.target.value })}
           />
           <TextInput
-            label="学工号"
+            label="QQ 号"
+            type="number"
+            w="100%"
+            value={profile.qqNumber ?? ''}
+            disabled={disabled}
+            onChange={(event) => setProfile({ ...profile, qqNumber: event.target.value })}
+          />
+        </SimpleGrid>
+        <SimpleGrid cols={2}>
+          <TextInput
+            label="一卡通号"
             type="number"
             w="100%"
             value={profile.stdNumber ?? ''}

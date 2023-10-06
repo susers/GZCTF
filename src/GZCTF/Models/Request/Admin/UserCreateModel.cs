@@ -38,8 +38,14 @@ public class UserCreateModel
     /// <summary>
     /// 学号
     /// </summary>
-    [MaxLength(15, ErrorMessage = "学工号过长")]
+    [MaxLength(15, ErrorMessage = "一卡通号过长")]
     public string? StdNumber { get; set; }
+    
+    /// <summary>
+    /// QQ 号
+    /// </summary>
+    [MaxLength(11, ErrorMessage = "QQ 号过长")]
+    public string? QqNumber { get; set; }
 
     /// <summary>
     /// 联系电话
@@ -60,6 +66,7 @@ public class UserCreateModel
             UserName = UserName,
             RealName = RealName ?? "",
             StdNumber = StdNumber ?? "",
+            QqNumber = QqNumber ?? "",
             PhoneNumber = Phone,
             EmailConfirmed = true
         };

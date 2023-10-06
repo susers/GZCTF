@@ -197,7 +197,7 @@ const Users: FC = () => {
           <TextInput
             w="30%"
             icon={<Icon path={mdiMagnify} size={1} />}
-            placeholder="搜索用户ID/用户名/邮箱/学号/姓名"
+            placeholder="搜索用户ID/用户名/邮箱/学号/姓名/QQ号"
             value={hint}
             onChange={setHint}
             onKeyDown={(e) => {
@@ -236,6 +236,7 @@ const Users: FC = () => {
                 <th>用户 IP</th>
                 <th>真实姓名</th>
                 <th>学号</th>
+                <th>QQ 号</th>
                 <th />
               </tr>
             </thead>
@@ -279,6 +280,11 @@ const Users: FC = () => {
                     <td>
                       <Text size="sm" ff={theme.fontFamilyMonospace}>
                         {!user.stdNumber ? '00000000' : user.stdNumber}
+                      </Text>
+                    </td>
+                    <td>
+                      <Text size="sm" ff={theme.fontFamilyMonospace}>
+                        {!user.qqNumber ? '00000000' : user.qqNumber}
                       </Text>
                     </td>
                     <td align="right">
