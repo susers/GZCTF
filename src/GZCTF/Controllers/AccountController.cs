@@ -491,6 +491,6 @@ public class AccountController(
     }
 
     string GetEmailLink(string action, string token, string? email)
-        => $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/account/{action}?" +
+        => $"https://{HttpContext.Request.Host}/account/{action}?" +
            $"token={token}&email={Codec.Base64.Encode(email)}";
 }
