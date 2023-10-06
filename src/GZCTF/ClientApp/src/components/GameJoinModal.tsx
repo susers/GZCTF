@@ -1,23 +1,25 @@
-import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Button, Modal, ModalProps, Select, Stack, TextInput } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
-import { mdiClose } from '@mdi/js'
-import { Icon } from '@mdi/react'
-import { useGame } from '@Utils/useGame'
-import { useTeams } from '@Utils/useUser'
-import { GameJoinModel } from '@Api'
+import {FC, useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
+import {Button, Modal, ModalProps, Select, Stack, TextInput} from '@mantine/core'
+import {showNotification} from '@mantine/notifications'
+import {mdiClose} from '@mdi/js'
+import {Icon} from '@mdi/react'
+import {useGame} from '@Utils/useGame'
+import {useTeams, useUser} from '@Utils/useUser'
+import {GameJoinModel} from '@Api'
+import {Text} from '@mantine/core'
 
 interface GameJoinModalProps extends ModalProps {
   onSubmitJoin: (info: GameJoinModel) => Promise<void>
 }
 
 const GameJoinModal: FC<GameJoinModalProps> = (props) => {
-  const { id } = useParams()
+  const {id} = useParams()
+  const {user} = useUser()
   const numId = parseInt(id ?? '-1')
-  const { onSubmitJoin, ...modalProps } = props
-  const { teams } = useTeams()
-  const { game } = useGame(numId)
+  const {onSubmitJoin, ...modalProps} = props
+  const {teams} = useTeams()
+  const {game} = useGame(numId)
 
   const [inviteCode, setInviteCode] = useState('')
   const [organization, setOrganization] = useState('')
@@ -30,6 +32,21 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
     }
   }, [teams])
 
+  useEffect(() => {
+    if (game?.organizations && game.organizations.sort().toString() == ['本科生', '研究生', '本科新生', '校外'].sort().toString()) {
+      if (user?.stdNumber?.startsWith('21323')) {
+        game.organizations = ['本科新生']
+        setOrganization('本科新生')
+      } else if (user?.stdNumber?.startsWith('213')) {
+        game.organizations = ['本科生']
+        setOrganization('本科生')
+      } else {
+        game.organizations = ['研究生']
+        setOrganization('研究生')
+      }
+    }
+  }, [user, game]);
+
   const onJoinGame = () => {
     setDisabled(true)
 
@@ -37,7 +54,7 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
       showNotification({
         color: 'orange',
         message: '请选择参赛队伍',
-        icon: <Icon path={mdiClose} size={1} />,
+        icon: <Icon path={mdiClose} size={1}/>,
       })
       setDisabled(false)
       return
@@ -47,7 +64,7 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
       showNotification({
         color: 'orange',
         message: '邀请码不能为空',
-        icon: <Icon path={mdiClose} size={1} />,
+        icon: <Icon path={mdiClose} size={1}/>,
       })
       setDisabled(false)
       return
@@ -57,7 +74,7 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
       showNotification({
         color: 'orange',
         message: '请选择参赛组织',
-        icon: <Icon path={mdiClose} size={1} />,
+        icon: <Icon path={mdiClose} size={1}/>,
       })
       setDisabled(false)
       return
@@ -83,7 +100,7 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
           withinPortal
           label="选择你的参赛队伍"
           description="请选择一个队伍参与比赛，选定后不可更改"
-          data={teams?.map((t) => ({ label: t.name!, value: t.id!.toString() })) ?? []}
+          data={teams?.map((t) => ({label: t.name!, value: t.id!.toString()})) ?? []}
           disabled={disabled}
           value={team}
           onChange={(e) => setTeam(e ?? '')}
@@ -99,16 +116,21 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
           />
         )}
         {game?.organizations && game.organizations.length > 0 && (
-          <Select
-            required
-            withinPortal
-            label="选择你的参赛组织"
-            description="本场比赛具有多个参赛组织，请选择你的参赛组织"
-            data={game.organizations}
-            disabled={disabled}
-            value={organization}
-            onChange={(e) => setOrganization(e ?? '')}
-          />
+          <>
+            <Select
+              required
+              withinPortal
+              label="选择你的参赛组织"
+              description="本场比赛具有多个参赛组织，请选择你的参赛组织"
+              data={game.organizations}
+              disabled={disabled}
+              value={organization}
+              onChange={(e) => setOrganization(e ?? '')}
+            />
+            <Text size="sm">
+              若参赛组别不正确，请检查个人资料中的一卡通号或联系组委会。请勿直接报名参赛，避免成绩无法统计。
+            </Text>
+          </>
         )}
         <Button disabled={disabled} onClick={onJoinGame}>
           报名参赛

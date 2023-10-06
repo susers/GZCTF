@@ -165,19 +165,19 @@ const GameDetail: FC = () => {
       children: (
         <Stack spacing="xs">
           <Text size="sm">你确定要报名此比赛吗？</Text>
-          <Text size="sm">
+          {false && <Text size="sm">
             报名参赛并审核通过后，参赛队伍将被锁定，不能再进行人员变动。
             <Text span fw={700}>
               即邀请、踢出队员。
             </Text>
             队伍将在比赛结束后或驳回请求时解锁。
-          </Text>
-          <Text size="sm">
+          </Text>}
+          {false && <Text size="sm">
             比赛队伍人数要求以选择队伍的成员数为准，
             <Text span fw={700}>
               不论队员是否以此队伍身份参加比赛。
             </Text>
-          </Text>
+          </Text>}
         </Stack>
       ),
       onConfirm: () => setJoinModalOpen(true),

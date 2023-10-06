@@ -299,7 +299,7 @@ const TeamEditModal: FC<TeamEditModalProps> = (props) => {
             </Center>
           </Grid.Col>
         </Grid>
-        {isCaptain && (
+        {false && isCaptain && (
           <PasswordInput
             label={
               <Group spacing="xs">
