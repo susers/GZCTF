@@ -128,7 +128,7 @@ const GameJoinModal: FC<GameJoinModalProps> = (props) => {
               onChange={(e) => setOrganization(e ?? '')}
             />
             <Text size="sm">
-              若参赛组别不正确，请检查个人资料中的一卡通号或联系组委会。请勿直接报名参赛，避免成绩无法统计。
+              参赛组别根据个人资料中的一卡通号自动选择，若不正确，请检查一卡通号是否有误或联系组委会。请勿直接报名参赛，避免成绩无法统计。
             </Text>
           </>
         )}
