@@ -25,6 +25,7 @@ import {
   mdiKeyboardBackspace,
   mdiPhoneOutline,
   mdiStar,
+  mdiPenguin
 } from '@mdi/js'
 import { Icon } from '@mdi/react'
 import { ParticipationStatusControl } from '@Components/admin/ParticipationStatusControl'
@@ -69,7 +70,7 @@ const MemberItem: FC<MemberItemProps> = (props) => {
               <Text>{!user.stdNumber ? '未填写' : user.stdNumber}</Text>
             </Group>
           </Stack>
-          <Stack spacing={2}>
+          <Stack spacing={2} w="15rem">
             <Group noWrap spacing="xs">
               <Icon path={mdiEmailOutline} {...iconProps} />
               <Text>{!user.email ? '未填写' : user.email}</Text>
@@ -77,6 +78,12 @@ const MemberItem: FC<MemberItemProps> = (props) => {
             <Group noWrap spacing="xs">
               <Icon path={mdiPhoneOutline} {...iconProps} />
               <Text>{!user.phone ? '未填写' : user.phone}</Text>
+            </Group>
+          </Stack>
+          <Stack spacing={2}>
+            <Group noWrap spacing="xs">
+              <Icon path={mdiPenguin} {...iconProps} />
+              <Text>{!user.qqNumber ? '未填写' : user.qqNumber}</Text>
             </Group>
           </Stack>
         </Group>
