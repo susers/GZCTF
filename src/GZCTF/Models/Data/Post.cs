@@ -59,10 +59,10 @@ public partial class Post
     internal Post Update(PostEditModel model, UserInfo user)
     {
         Title = model.Title;
-        Summary = string.IsNullOrEmpty(model.Summary) ? Summary : model.Summary;
-        Content = string.IsNullOrEmpty(model.Content) ? Content : model.Content;
+        Summary = model.Summary;
+        Content = model.Content;
         IsPinned = model.IsPinned;
-        Tags = model.Tags.Length > 0 ? model.Tags.ToList() : Tags;
+        Tags = model.Tags.ToList();
         Author = user;
         AuthorId = user.Id;
         UpdateTimeUTC = DateTimeOffset.UtcNow;
